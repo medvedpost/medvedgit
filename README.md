@@ -17,7 +17,7 @@ sudo apt install exfat-fuse exfat-utils -y
 ```
 ```console
 UUID=$(blkid -o value -s UUID /dev/sda1)
-sudo echo "UUID=$UUID        /data           exfat   defaults,auto,umask=000,users,rw    0       0" | sudo tee -a /etc/fstab
+sudo echo "UUID=$UUID        /data           exfat   defaults,auto,umask=000,users,rw    0       0" | sudo tee -a /etc/fstab > /dev/null
 ```
 
 #### [Generating public/private rsa key pair](https://andreyex.ru/linux/kak-dobavit-otkrytyj-klyuch-ssh-na-server/)
@@ -83,9 +83,7 @@ sudo cp k3sup-arm64 /usr/local/bin/k3sup
 sudo apt install -y apt-transport-https gnupg2 ca-certificates -y
 	
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-cat << EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
-deb https://apt.kubernetes.io/ kubernetes-xenial main
-EOF
+echo deb https://apt.kubernetes.io/ kubernetes-xenial main | sudo tee /etc/apt/sources.list.d/kubernetes.list > /dev/null
 
 sudo apt update && sudo apt install kubectl
 
