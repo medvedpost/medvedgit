@@ -1,0 +1,12 @@
+# Create new user
+```sh
+apt update
+apt upgrade
+apt install sudo
+```
+```
+adduser medved
+usermod -aG sudo medved
+su medved
+sudo chmod -R 777 $HOME
+```
