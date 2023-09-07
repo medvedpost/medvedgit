@@ -2,7 +2,7 @@
 
 ## Prepare OS
 ```sh
-apt update | dsd
+apt update
 apt upgrade
 apt install sudo
 ```
