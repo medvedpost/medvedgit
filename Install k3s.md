@@ -2,14 +2,6 @@
 sudo apt update && sudo apt upgrade
 ```
 
-#### Create new sudo users and switch on it
-```sh
-apt install sudo
-adduser medved
-usermod -aG sudo medved
-su medved
-```
-
 #### [Automount SSD](https://pimylifeup.com/raspberry-pi-exfat/)
 ```sh
 sudo apt install exfat-fuse exfat-utils -y
