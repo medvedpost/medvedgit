@@ -65,6 +65,7 @@ sudo cp k3sup /usr/local/bin/k3sup
 sudo install k3sup /usr/local/bin/
 #sudo cp k3sup-arm64 /usr/local/bin/k3sup
 #sudo install k3sup-arm64 /usr/local/bin/
+#sudo rm ~/k3sup-arm64
 ```
 
 #### Install kubectl and dependences, start k3s master node
@@ -77,13 +78,17 @@ echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt
 
 sudo apt update && sudo apt install kubectl
 
+echo "cgroup_memory=1 cgroup_enable=memory" | sudo tee -a /boot/cmdline.txt
+#console=serial0,115200 console=tty1 root=PARTUUID=39a0e3eb-02 rootfstype=ext4 fsck.repair=yes rootwait quiet splash plymouth.ignore-serial-consoles cgroup_memory=1 cgroup_enable=memory
+```
+```sh
+sudo reboot
+```
+```sh
 k3sup install --local --user medved
 
 export KUBECONFIG=/home/medved/kubeconfig
-cp /home/medved/kubeconfig /home/medved/kube/config
+cp /home/medved/kubeconfig ~/.kube/config
 kubectl config use-context default
 kubectl get node -o wide
-
-echo "cgroup_memory=1 cgroup_enable=memory" | sudo tee -a /boot/cmdline.txt
-#console=serial0,115200 console=tty1 root=PARTUUID=39a0e3eb-02 rootfstype=ext4 fsck.repair=yes rootwait quiet splash plymouth.ignore-serial-consoles cgroup_memory=1 cgroup_enable=memory
 ```
