@@ -2,15 +2,6 @@
 sudo apt update && sudo apt upgrade
 ```
 
-#### [Automount SSD](https://pimylifeup.com/raspberry-pi-exfat/)
-```sh
-sudo apt install exfat-fuse exfat-utils -y
-```
-```sh
-UUID=$(blkid -o value -s UUID /dev/sda1)
-sudo echo "UUID=$UUID        /data           exfat   defaults,auto,umask=000,users,rw    0       0" | sudo tee -a /etc/fstab > /dev/null
-```
-
 #### [Generating public/private rsa key pair](https://andreyex.ru/linux/kak-dobavit-otkrytyj-klyuch-ssh-na-server/)
 ```sh
 mkdir /home/medved/.ssh/
@@ -55,6 +46,7 @@ systemctl -q is-active log2ram || {
   chmod +x install.sh && sudo ./install.sh
   popd
   rm -r ./log2ram-master
+  rm ~/log2ram.tar.gz
 
   echo "SystemMaxUse=20M" | sudo tee -a /etc/systemd/journald.conf > /dev/null
 };
@@ -62,11 +54,17 @@ systemctl -q is-active log2ram || {
 ```sh
 sudo systemctl reboot
 ```
-#### [Install local helpers (k3sup)](https://github.com/alexellis/k3sup)
+#### [Download and install local helpers (k3sup)](https://github.com/alexellis/k3sup)
+
 ```sh
 curl -sLS https://get.k3sup.dev | sh
-sudo cp k3sup-arm64 /usr/local/bin/k3sup
-sudo install k3sup-arm64 /usr/local/bin/
+```
+
+```sh
+sudo cp k3sup /usr/local/bin/k3sup
+sudo install k3sup /usr/local/bin/
+#sudo cp k3sup-arm64 /usr/local/bin/k3sup
+#sudo install k3sup-arm64 /usr/local/bin/
 ```
 
 #### Install kubectl and dependences, start k3s master node
