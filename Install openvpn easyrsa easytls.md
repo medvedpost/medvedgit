@@ -236,7 +236,9 @@ sudo ~/scripts/make_config.sh Pi4B
 ## CLIENT SIDE
 ```sh
 sudo apt install openvpn
-sudo openvpn --config Pi4B.conf
-sudo systemctl enable openvpn-client@Pi4B.conf
+#sudo openvpn --config Pi4B.conf
+sudo cp Pi4B.conf /etc/openvpn/
+sudo systemctl enable openvpn@Pi4B
 sudo systemctl daemon-reload
+sudo systemctl start openvpn@Pi4b
 #sudo systemctl status openvpn@Pi4b
