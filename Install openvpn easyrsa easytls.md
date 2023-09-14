@@ -1,4 +1,20 @@
-# Install easyrsa easytls openvpn 
+# Install easyrsa openvpn easytls
+
+###Настройка перенаправления IP пакетов в ядре Linux сервера
+```sh
+sudo chmod 777 /etc/sysctl.conf
+
+tee -a <<EOF >> /etc/sysctl.conf
+net.ipv4.ip_forward=1
+EOF
+
+sudo sysctl -p
+```
+## Install openvpn
+```sh
+apt install openvpn -y
+```
+
 ## Install easyrsa
 
 Find out actual [release](https://github.com/OpenVPN/easy-rsa/releases) of easyrsa and change $rsalink 
@@ -54,6 +70,7 @@ set_var EASYRSA_CERT_EXPIRE     "3650"
 set_var EASYRSA_RAND_SN         "yes"
 EOF
 ```
+### Создание сертификата сервера, ключа и файлов шифрования
 ```sh
 ./easyrsa build-ca nopass
 #CA creation complete. Your new CA certificate is at: /home/medved/easyrsa/pki/ca.crt
@@ -64,6 +81,9 @@ EOF
 ./easyrsa build-server-full VDSina nopass
 #Certificate created at: /home/medved/easyrsa/pki/issued/VDSina.crt
 #Inline file created: /home/medved/easyrsa/pki/inline/VDSina.inline
+
+sudo openvpn --genkey --secret pki/ta.key
+#/home/medved/easyrsa/pki/ta.key
 -----
 ./easyrsa build-client-full Pi4B nopass
 #Certificate created at: /home/medved/easyrsa/pki/issued/Pi4B.crt
@@ -75,50 +95,15 @@ EOF
 #./easyrsa build-client-full Olly nopass
 ```
 
-
-## Install easytls
-Find out actual [release](https://github.com/TinCanTech/easy-tls/releases) of easytls and change $tlslink 
+### Конфигурирование сервера OPENVPN
 ```sh
-export tlslink=https://github.com/TinCanTech/easy-tls/files/7873797/easytls-2.7.0.tar.gz
-export tlstgz=$(echo $tlslink | rev | cut -f1 -d"/" | rev)
-
-cd ~/easyrsa
-
-wget $tlslink
-tar zxvf $tlstgz
-rm $tlstgz
-```
-
-## Generating tls certs
-```sh
-cd ~/easyrsa
-./easytls init-tls
-#Your newly created TLS dir is: ./pki/easytls
-
-./easytls build-tls-auth
-#TLS auth key created: ./pki/easytls/tls-auth.key
-
-./easytls build-tls-crypt
-#TLS crypt v1 key created: ./pki/easytls/tls-crypt.key
-
-./easytls build-tls-crypt-v2-server VDSina
-#TLS crypt v2 server key created: ./pki/easytls/VDSina-tls-crypt-v2.key
-
------
-./easytls build-tls-crypt-v2-client VDSina Pi4B
-#TLS crypt v2 client key created: ./pki/easytls/Pi4B-tls-crypt-v2.key
-
-./easytls build-tls-crypt-v2-client VDSina X3Pro
-./easytls build-tls-crypt-v2-client VDSina 2Pro360
-./easytls build-tls-crypt-v2-client VDSina T440
-./easytls build-tls-crypt-v2-client VDSina Olly
-```
-## Install openvpn
-```sh
-apt install openvpn -y
+sudo cp ~/easyrsa/pki/{ca.crt,ta.key,dh.pem} /etc/openvpn
+sudo cp ~/easyrsa/pki/issued/VDSina.crt /etc/openvpn
+sudo cp ~/easyrsa/pki/private/{ca.key,VDSina.key} /etc/openvpn
 ```
 ```sh
 sudo chmod 777 /etc/openvpn/
+#drwxr-xr-x  4 root root   4.0K Sep 14 17:41 openvpn
 
 tee -a <<EOF > /etc/openvpn/server.conf
 port 1194
@@ -144,21 +129,48 @@ explicit-exit-notify 1
 EOF
 ```
 ```sh
-cp ~/easyrsa/pki/{ca.crt,dh.pem} /etc/openvpn
-cp ~/easyrsa/pki/easytls/tls-auth.key /etc/openvpn
-cp ~/easyrsa/pki/issued/VDSina.crt /etc/openvpn
-cp ~/easyrsa//pki/private/VDSina.key /etc/openvpn
-```
-```sh
-sudo chmod 777 /etc/sysctl.conf
-
-tee -a <<EOF >> /etc/sysctl.conf
-net.ipv4.ip_forward=1
-EOF
-
-sudo sysctl -p
-```
-```sh
 sudo systemctl start openvpn@server 
 sudo systemctl enable openvpn@server
+#sudo systemctl status openvpn@server 
+```
+## Install easytls
+Find out actual [release](https://github.com/TinCanTech/easy-tls/releases) of easytls and change $tlslink 
+```sh
+export tlslink=https://github.com/TinCanTech/easy-tls/files/7873797/easytls-2.7.0.tar.gz
+export tlstgz=$(echo $tlslink | rev | cut -f1 -d"/" | rev)
+
+cd ~/easyrsa
+
+wget $tlslink
+tar zxvf $tlstgz
+rm $tlstgz
+
+### cd ~/scripts
+### sudo chmod +x easytls.sh
+### ./easytls.sh
+```
+
+## Generating tls certs
+```sh
+cd ~/easyrsa
+sudo ./easytls init-tls
+#Your newly created TLS dir is: ./pki/easytls
+
+sudo ./easytls build-tls-auth
+#TLS auth key created: ./pki/easytls/tls-auth.key
+
+sudo ./easytls build-tls-crypt
+#TLS crypt v1 key created: ./pki/easytls/tls-crypt.key
+
+sudo ./easytls build-tls-crypt-v2-server VDSina
+#TLS crypt v2 server key created: ./pki/easytls/VDSina-tls-crypt-v2.key
+
+-----
+sudo ./easytls build-tls-crypt-v2-client VDSina Pi4B
+#TLS crypt v2 client key created: ./pki/easytls/Pi4B-tls-crypt-v2.key
+
+#./easytls build-tls-crypt-v2-client VDSina X3Pro
+#./easytls build-tls-crypt-v2-client VDSina 2Pro360
+#./easytls build-tls-crypt-v2-client VDSina T440
+#./easytls build-tls-crypt-v2-client VDSina Olly
 ```
