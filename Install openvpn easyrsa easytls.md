@@ -174,3 +174,62 @@ sudo ./easytls build-tls-crypt-v2-client VDSina Pi4B
 #./easytls build-tls-crypt-v2-client VDSina T440
 #./easytls build-tls-crypt-v2-client VDSina Olly
 ```
+## Genetate client .OVPN/.CONF
+```sh
+mkdir /home/medved/easyrsa/pki/ovpn/
+sudo nano ~/scripts/make_config.sh
+```
+```sh
+#!/bin/sh
+srv_cert=/etc/openvpn
+user_key=/home/medved/easyrsa/pki/private
+user_crt=/home/medved/easyrsa/pki/issued
+dir=/home/medved/easyrsa/pki/ovpn
+
+(cat ${dir}/base.conf
+
+echo '<ca>'
+cat ${srv_cert}/ca.crt
+echo '</ca>'
+
+echo '<tls-auth>'
+cat ${srv_cert}/ta.key
+echo '</tls-auth>'
+
+echo '<cert>'
+cat ${user_crt}/${1}.crt
+echo '</cert>'
+
+echo '<key>'
+cat ${user_key}/${1}.key
+echo '</key>'
+) > ${dir}/${1}.ovpn
+cp ${dir}/${1}.ovpn ${dir}/${1}.conf
+```
+```sh
+tee -a <<EOF > ~/easyrsa/pki/ovpn/base.conf
+client
+dev tun
+proto udp
+remote 195.2.75.173 1194
+resolv-retry infinite
+nobind
+user nobody
+group nogroup
+persist-key
+persist-tun
+#ca ca.crt
+#cert client.crt
+#key client.key
+remote-cert-tls server
+tls-auth tls-auth.key 1
+cipher AES-128-CBC
+auth SHA256
+verb 3
+key-direction 1
+EOF
+```
+```sh
+sudo chmod +x ~/scripts/make_config.sh
+sudo ~/scripts/make_config.sh Pi4B
+```
