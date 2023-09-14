@@ -23,6 +23,9 @@ mv ./$rsadir/* ./
 
 rm $rsatgz
 rm -rf $rsadir
+### cd ~/scripts
+### sudo chmod +x easyrsa.sh
+### sudo ./easyrsa.sh
 ```
 ## Generate [rsa certs](https://community.openvpn.net/openvpn/wiki/EasyRSA3-OpenVPN-Howto)
 
