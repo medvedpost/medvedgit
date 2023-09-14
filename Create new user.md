@@ -2,9 +2,7 @@
 
 ## Prepare OS
 ```sh
-apt update
-apt upgrade
-apt install sudo
+apt update && apt upgrade -y && apt install sudo
 ```
 ## Add new user and grant permissions
 ```sh
