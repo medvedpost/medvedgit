@@ -113,17 +113,20 @@ ca ca.crt
 cert VDSina.crt
 key VDSina.key  # This file should be kept secret
 dh dh.pem
-server 10.3.3.0 255.255.255.0
+server 10.8.0.0 255.255.255.0
 ifconfig-pool-persist /var/log/openvpn/ipp.txt
 client-to-client
 keepalive 10 120
-cipher AES-256-GCM
+tls-auth ta.key 0
+key-direction 0
+cipher AES-128-CBC
 auth SHA256
 user nobody
 group nogroup
 persist-key
 persist-tun
 status /var/log/openvpn/openvpn-status.log
+log /var/log/openvpn/openvpn.log
 verb 3
 explicit-exit-notify 1
 EOF
@@ -218,11 +221,8 @@ user nobody
 group nogroup
 persist-key
 persist-tun
-#ca ca.crt
-#cert client.crt
-#key client.key
 remote-cert-tls server
-tls-auth tls-auth.key 1
+tls-auth ta.key 1
 cipher AES-128-CBC
 auth SHA256
 verb 3
