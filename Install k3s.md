@@ -7,6 +7,13 @@ sudo apt update && sudo apt upgrade
 mkdir /home/medved/.ssh/
 sudo ssh-keygen -t rsa -f /home/medved/.ssh/id_rsa
 cp ~/.ssh/id_rsa.pub  ~/.ssh/authorized_keys
+ssh medved@pi4b
+sudo chmod 777 /home/medved/.ssh/id_rsa
+sudo nano /etc/ssh/sshd_config
+# HostbasedAuthentication yes
+# CASignatureAlgorithms +ssh-rsa
+sudo mkdir /root/.ssh
+#cp -r /home/medved/.ssh/. /root/.ssh/
 ```
 ```sh
 if [ -z "$(sudo grep 'medved ALL=(ALL:ALL) ALL' /etc/sudoers )" ]
@@ -63,12 +70,14 @@ curl -sLS https://get.k3sup.dev | sh
 ```sh
 sudo cp k3sup /usr/local/bin/k3sup
 sudo install k3sup /usr/local/bin/
+sudo rm ~/k3sup
 #sudo cp k3sup-arm64 /usr/local/bin/k3sup
 #sudo install k3sup-arm64 /usr/local/bin/
 #sudo rm ~/k3sup-arm64
 ```
 
 #### Install kubectl and dependences, start k3s master node
+
 ```sh
 sudo swapoff -a
 sudo apt install -y apt-transport-https gnupg2 ca-certificates -y
@@ -85,10 +94,15 @@ echo "cgroup_memory=1 cgroup_enable=memory" | sudo tee -a /boot/cmdline.txt
 sudo reboot
 ```
 ```sh
-k3sup install --local --user medved
-
+#k3sup install --local --user medved
+#k3sup install --host Pi4B  --user medved
+k3sup install --host Pi4B
 export KUBECONFIG=/home/medved/kubeconfig
 cp /home/medved/kubeconfig ~/.kube/config
 kubectl config use-context default
 kubectl get node -o wide
+#/usr/local/bin/k3s-uninstall.sh
 ```
+[REFERENCES](https://docs.k3s.io/installation/uninstall)
+(https://github.com/alexellis/k3sup)
+(https://github.com/philschatz/nextcloud-kubernetes-pi/tree/main)
