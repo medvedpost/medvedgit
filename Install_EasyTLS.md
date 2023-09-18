@@ -1,6 +1,6 @@
 # Install EasyTLS
 
-Find out actual [release](https://github.com/TinCanTech/easy-tls/releases) of easytls and change $tlslink 
+Find out [actual release](https://github.com/TinCanTech/easy-tls/releases) of easytls and change $tlslink 
 ```sh
 export tlslink=https://github.com/TinCanTech/easy-tls/files/7873797/easytls-2.7.0.tar.gz
 export tlstgz=$(echo $tlslink | rev | cut -f1 -d"/" | rev)
