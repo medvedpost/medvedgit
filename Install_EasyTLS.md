@@ -1,7 +1,4 @@
 # Install EasyTLS
-```sh
-sudo apt update && sudo apt upgrade -y
-```
 
 Find out actual [release](https://github.com/TinCanTech/easy-tls/releases) of easytls and change $tlslink 
 ```sh
