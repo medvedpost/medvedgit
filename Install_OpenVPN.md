@@ -8,7 +8,7 @@ sudo apt update && sudo apt upgrade -y
 apt install openvpn -y
 ```
 ## Install easyrsa
-[Install EasyRSA ang generate certs](!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!)
+[Install EasyRSA ang generate certs](https://github.com/medvedpost/medvedgit/blob/bash/Install_EasyRSA.md)
 
 ## Copy certs and keys to default OpenVPN folder
 ```sh
@@ -69,3 +69,4 @@ sudo systemctl daemon-reload
 sudo systemctl start openvpn@Pi4b
 #sudo systemctl status openvpn@Pi4b
 ```
+[REFERENCES](https://wiki.dieg.info/openvpn#shag_10sozdanie_infrastruktury_dlja_konfiguracionnyx_fajlov_klientov)
