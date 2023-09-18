@@ -29,8 +29,9 @@ ca ca.crt
 cert VDSina.crt
 key VDSina.key  # This file should be kept secret
 dh dh.pem
-server 10.8.0.0 255.255.255.0
+server 10.3.3.0 255.255.255.0
 ifconfig-pool-persist /var/log/openvpn/ipp.txt
+client-config-dir /etc/openvpn/ccd
 client-to-client
 keepalive 10 120
 tls-auth ta.key 0
@@ -46,6 +47,22 @@ log /var/log/openvpn/openvpn.log
 verb 3
 explicit-exit-notify 1
 EOF
+```
+
+## Configure client static IP
+```sh
+mkdir /etc/openvpn/ccd
+sudo chmod 744 /etc/openvpn/ccd
+sudo chown -R nobody:nogroup /etc/openvpn/ccd
+```
+```sh
+#sudo openssl x509 -in /home/medved/staticclients/Pi4B.crt -noout -subject | sed 's/^.*\(CN.*,\).*$/\1/' | sed 's/.$//'
+tee -a <<EOF > ~/ccd/Pi4B
+ifconfig-push 10.3.3.4 255.255.255.0
+EOF
+```
+```sh
+sudo cp -r ~/ccd/. /etc/openvpn/ccd/
 ```
 
 ## Start OpenVPN service (SERVER side)
