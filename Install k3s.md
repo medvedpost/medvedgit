@@ -68,12 +68,12 @@ curl -sLS https://get.k3sup.dev | sh
 ```
 
 ```sh
-sudo cp k3sup /usr/local/bin/k3sup
-sudo install k3sup /usr/local/bin/
-sudo rm ~/k3sup
-#sudo cp k3sup-arm64 /usr/local/bin/k3sup
-#sudo install k3sup-arm64 /usr/local/bin/
-#sudo rm ~/k3sup-arm64
+sudo cp k3sup-arm64 /usr/local/bin/k3sup
+sudo install k3sup-arm64 /usr/local/bin/
+sudo rm ~/k3sup-arm64
+#sudo cp k3sup /usr/local/bin/k3sup
+#sudo install k3sup /usr/local/bin/
+#sudo rm ~/k3sup
 ```
 
 #### Install kubectl and dependences, start k3s master node
