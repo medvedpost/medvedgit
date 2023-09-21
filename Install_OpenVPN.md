@@ -85,5 +85,6 @@ sudo systemctl enable openvpn@Pi4B
 sudo systemctl daemon-reload
 sudo systemctl start openvpn@Pi4b
 #sudo systemctl status openvpn@Pi4b
+sudo reboot
 ```
 [REFERENCES](https://wiki.dieg.info/openvpn#shag_10sozdanie_infrastruktury_dlja_konfiguracionnyx_fajlov_klientov)
