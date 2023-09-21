@@ -74,7 +74,7 @@ sudo systemctl enable openvpn@server
 
 ## Install and copy config to default OpenVPN folder (CLIENT side)
 ```sh
-sudo apt install openvpn
+sudo apt install openvpn -y
 #sudo openvpn --config Pi4B.conf
 sudo cp Pi4B.conf /etc/openvpn/
 ```
