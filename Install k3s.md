@@ -1,8 +1,9 @@
+# Install k3s
 ```sh
-sudo apt update && sudo apt upgrade && sudo apt autoremove
+sudo apt update && sudo apt upgrade -y && sudo apt autoremove
 ```
 
-#### [Generating public/private rsa key pair](https://andreyex.ru/linux/kak-dobavit-otkrytyj-klyuch-ssh-na-server/)
+## [Generating public/private rsa key pair](https://andreyex.ru/linux/kak-dobavit-otkrytyj-klyuch-ssh-na-server/)
 ```sh
 mkdir /home/medved/.ssh/
 sudo ssh-keygen -t rsa -f /home/medved/.ssh/id_rsa
@@ -34,12 +35,12 @@ EOF
 #sudo visudo
 ```
 
-#### [Install OS dependencies](https://github.com/philschatz/nextcloud-kubernetes-pi/blob/main/templates/install-os-deps.sh)
+## [Install OS dependencies](https://github.com/philschatz/nextcloud-kubernetes-pi/blob/main/templates/install-os-deps.sh)
 ```sh
 sudo apt install git pmount downtimed unattended-upgrades curl net-tools -y
 ```
-#### [Install packages that reduce the churn on the SD card](https://github.com/philschatz/nextcloud-kubernetes-pi/blob/main/templates/install-disk-savers.sh)
-Install zram-swap if it is not already running
+## [Install packages that reduce the churn on the SD card](https://github.com/philschatz/nextcloud-kubernetes-pi/blob/main/templates/install-disk-savers.sh)
+### Install zram-swap if it is not already running
 ```sh
 systemctl -q is-active zram-swap || {
   [[ -d ./zram-swap ]] && rm -r ./zram-swap
@@ -54,7 +55,7 @@ systemctl -q is-active zram-swap || {
 ```sh
 systemctl status zram-swap
 ```
-Install log2ram if it is not already running
+### Install log2ram if it is not already running
 ```sh
 systemctl -q is-active log2ram || {
   [[ -d ./log2ram-master ]] && rm -r ./log2ram-master 
@@ -73,7 +74,7 @@ systemctl -q is-active log2ram || {
 ```sh
 sudo systemctl reboot
 ```
-#### [Download and install local helpers (k3sup)](https://github.com/alexellis/k3sup)
+## [Download and install local helpers (k3sup)](https://github.com/alexellis/k3sup)
 
 ```sh
 curl -sLS https://get.k3sup.dev | sh
@@ -88,7 +89,7 @@ sudo rm ~/k3sup-arm64
 #sudo rm ~/k3sup
 ```
 
-#### Install kubectl and dependences, start k3s master node
+## Install kubectl and dependences, start k3s master node
 
 ```sh
 sudo swapoff -a
