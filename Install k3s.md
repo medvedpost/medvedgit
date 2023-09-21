@@ -1,6 +1,6 @@
 # Install k3s
 ```sh
-sudo apt update && sudo apt upgrade -y && sudo apt autoremove
+sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
 ```
 
 ## [Generating public/private rsa key pair](https://andreyex.ru/linux/kak-dobavit-otkrytyj-klyuch-ssh-na-server/)
@@ -23,17 +23,9 @@ EOF
 #cp -r /home/medved/.ssh/. /root/.ssh/
 ```
 ```sh
-sudo chmod 777 /etc/sudoers
-tee -a <<EOF > /etc/sudoers
-Defaults        env_reset
-Defaults        mail_badpass
-Defaults        secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-
-root    ALL=(ALL:ALL) ALL
+sudo nano /etc/sudoers
 medved  ALL=(ALL) NOPASSWD: ALL
-@includedir /etc/sudoers.d
-EOF
-
+#%sudo  ALL=(ALL:ALL) ALL #<---comment it
 #sudo visudo
 ```
 
