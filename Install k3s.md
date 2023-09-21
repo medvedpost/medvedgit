@@ -12,6 +12,7 @@ cp ~/.ssh/id_rsa.pub  ~/.ssh/authorized_keys
 ```sh
 ssh medved@Pi4B
 sudo chmod 777 /home/medved/.ssh/id_rsa
+sudo chmod 777 /etc/ssh/sshd_config
 ```
 ```sh
 tee -a <<EOF > /etc/ssh/sshd_config
@@ -22,7 +23,8 @@ EOF
 #cp -r /home/medved/.ssh/. /root/.ssh/
 ```
 ```sh
-tee -a <EOF > /etc/sudoers
+sudo chmod 777 /etc/sudoers
+tee -a <<EOF > /etc/sudoers
 Defaults        env_reset
 Defaults        mail_badpass
 Defaults        secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
