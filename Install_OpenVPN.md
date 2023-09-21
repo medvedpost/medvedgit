@@ -1,6 +1,6 @@
 # Install OpenVPN
 ```sh
-sudo apt update && sudo apt upgrade -y
+sudo apt update && sudo apt upgrade -y && sudo apt autoremove
 ```
 
 ## Install OpenVPN service
