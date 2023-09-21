@@ -14,7 +14,7 @@ UUID=$(blkid -o value -s UUID /dev/sda1)
 ```
 ```sh
 sudo tee -a <<EOF >> /etc/fstab
-UUID=6E45-F643       /data                         exfat   defaults,auto,umask=000,users,rw    0      0
+UUID=$UUID       /data                         exfat   defaults,auto,umask=000,users,rw    0      0
 /data/storage        /var/lib/rancher/k3s/storage  none    bind
 EOF
 ```
