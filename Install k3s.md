@@ -7,12 +7,12 @@ sudo apt update && sudo apt upgrade && sudo apt autoremove
 mkdir /home/medved/.ssh/
 sudo ssh-keygen -t rsa -f /home/medved/.ssh/id_rsa
 cp ~/.ssh/id_rsa.pub  ~/.ssh/authorized_keys
-ssh medved@pi4b
+```
+```sh
+ssh medved@Pi4B
 sudo chmod 777 /home/medved/.ssh/id_rsa
-sudo nano /etc/ssh/sshd_config
-# HostbasedAuthentication yes
-# CASignatureAlgorithms +ssh-rsa
-sudo mkdir /root/.ssh
+sudo echo "HostbasedAuthentication yes" | sudo tee -a /etc/ssh/sshd_config
+#sudo mkdir /root/.ssh
 #cp -r /home/medved/.ssh/. /root/.ssh/
 ```
 ```sh
