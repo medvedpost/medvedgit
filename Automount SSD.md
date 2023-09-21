@@ -9,15 +9,12 @@ sudo apt install exfat-fuse exfat-utils -y
 ## Config device UUID
 ```sh
 sudo mkdir /data/storage
+chmod 777 /etc/fstab
+UUID=$(blkid -o value -s UUID /dev/sda1)
 ```
 ```sh
-UUID=$(blkid -o value -s UUID /dev/sda1)
-
-tee -a <<EOF > /etc/fstab > /dev/null
-UUID=$UUID            /data                         exfat   defaults,auto,umask=000,users,rw    0       0" | sudo tee -a /etc/fstab > /dev/null
-/data/storage         /var/lib/rancher/k3s/storage  none    bind 
+sudo tee -a <<EOF >> /etc/fstab
+UUID=6E45-F643       /data                         exfat   defaults,auto,umask=000,users,rw    0      0
+/data/storage        /var/lib/rancher/k3s/storage  none    bind
 EOF
-#mount --bind source destination
- 
-#sudo echo "/data/storage         /var/lib/rancher/k3s/storage/ exfat   defaults,auto,umask=000,users,rw    0       0" | sudo tee -a /etc/fstab > /dev/null
 ```
