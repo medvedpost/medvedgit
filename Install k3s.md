@@ -11,14 +11,26 @@ cp ~/.ssh/id_rsa.pub  ~/.ssh/authorized_keys
 ```sh
 ssh medved@Pi4B
 sudo chmod 777 /home/medved/.ssh/id_rsa
-sudo echo "HostbasedAuthentication yes" | sudo tee -a /etc/ssh/sshd_config
+```
+```sh
+tee -a <<EOF > /etc/ssh/sshd_config
+HostbasedAuthentication yes
+CASignatureAlgorithms +ssh-rsa
+EOF
 #sudo mkdir /root/.ssh
 #cp -r /home/medved/.ssh/. /root/.ssh/
 ```
 ```sh
-if [ -z "$(sudo grep 'medved ALL=(ALL:ALL) ALL' /etc/sudoers )" ]
-  then echo "medved ALL=(ALL:ALL) ALL" | sudo EDITOR='tee -a' visudo;
-fi;
+tee -a <EOF > /etc/sudoers
+Defaults        env_reset
+Defaults        mail_badpass
+Defaults        secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+root    ALL=(ALL:ALL) ALL
+medved  ALL=(ALL) NOPASSWD: ALL
+@includedir /etc/sudoers.d
+EOF
+
 #sudo visudo
 ```
 
@@ -95,9 +107,10 @@ sudo reboot
 ```
 ```sh
 #k3sup install --local --user medved
-#k3sup install --host Pi4B  --user medved
-k3sup install --host Pi4B
+k3sup install --host Pi4B  --user medved
+
 export KUBECONFIG=/home/medved/kubeconfig
+mkdir ~/.kube
 cp /home/medved/kubeconfig ~/.kube/config
 kubectl config use-context default
 kubectl get node -o wide
