@@ -1,5 +1,5 @@
 ```sh
-sudo apt update && sudo apt upgrade
+sudo apt update && sudo apt upgrade && sudo apt autoremove
 ```
 
 #### [Generating public/private rsa key pair](https://andreyex.ru/linux/kak-dobavit-otkrytyj-klyuch-ssh-na-server/)
