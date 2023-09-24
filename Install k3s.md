@@ -11,6 +11,9 @@ cp ~/.ssh/id_rsa.pub  ~/.ssh/authorized_keys
 ```
 ```sh
 ssh medved@Pi4B
+exit
+```
+```sh
 sudo chmod 777 /home/medved/.ssh/id_rsa
 sudo chmod 777 /etc/ssh/sshd_config
 ```
@@ -25,7 +28,7 @@ EOF
 ```sh
 sudo nano /etc/sudoers
 medved  ALL=(ALL) NOPASSWD: ALL
-#%sudo  ALL=(ALL:ALL) ALL #<---comment it
+#%sudo  ALL=(ALL:ALL) ALL #<---comment it???
 #sudo visudo
 ```
 
