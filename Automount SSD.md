@@ -11,7 +11,7 @@ sudo apt install exfat-fuse exfat-utils -y
 sudo mkdir /data
 mkdir -p /var/lib/rancher/k3s/storage
 sudo chmod 777 /etc/fstab
-UUID=$(blkid -o value -s UUID /dev/sda1)
+UUID=$(blkid -o value -s UUID /dev/sda)
 ```
 ```sh
 sudo tee -a <<EOF >> /etc/fstab
