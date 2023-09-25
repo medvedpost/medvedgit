@@ -9,9 +9,12 @@ sudo apt install exfat-fuse exfat-utils -y
 ## Config device UUID
 ```sh
 sudo mkdir /data
-sudo chmod 777 -R /data
 sudo mkdir -p /var/lib/rancher/k3s/storage
+
+sudo chmod 777 -R /data
 sudo chmod 777 -R /var/lib/rancher/k3s/storage
+
+sudo cp /etc/fstab /etc/fstab.bak
 sudo chmod 777 /etc/fstab
 UUID=$(blkid -o value -s UUID /dev/sda)
 ```
