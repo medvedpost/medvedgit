@@ -16,9 +16,10 @@ exit
 ```sh
 sudo chmod 777 /home/medved/.ssh/id_rsa
 sudo chmod 777 /etc/ssh/sshd_config
+sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
 ```
 ```sh
-tee -a <<EOF > /etc/ssh/sshd_config
+sudo tee -a <<EOF >> /etc/ssh/sshd_config
 HostbasedAuthentication yes
 CASignatureAlgorithms +ssh-rsa
 EOF
