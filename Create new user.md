@@ -3,7 +3,8 @@
 ## Prepare OS
 ```sh
 sudo su
-apt update && apt upgrade -y && sudo apt autoremove -y && apt install sudo
+apt update && apt upgrade -y && apt autoremove -y && apt install sudo
+#sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y && sudo apt install sudo
 exit
 ```
 ## Add new user and grant permissions
