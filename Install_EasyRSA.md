@@ -63,7 +63,7 @@ EOF
 sudo openvpn --genkey --secret pki/ta.key
 #CA creation complete. Your new CA certificate is at: /home/medved/easyrsa/pki/ca.crt
 #DH parameters of size 2048 created at: /home/medved/easyrsa/pki/dh.pem
-#/home/medved/easyrsa/pki/ta.key
+##TA auth key created at: /home/medved/easyrsa/pki/ta.key
 ```
 ```sh
 ./easyrsa build-server-full VDSina-vpn nopass
