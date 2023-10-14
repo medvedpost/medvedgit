@@ -78,7 +78,8 @@ sudo openvpn --genkey --secret pki/ta.key
 #./easyrsa build-client-full 2Pro360 nopass
 #./easyrsa build-client-full T440 nopass
 #./easyrsa build-client-full Olly nopass
-```
+
 ./easyrsa --san=DNS:Pi4B,DNS:medvedcloud,DNS:medvedcloud.local,DNS:medvedcloud.lan,DNS:medvedcloud.duckdns.org build-server-full Pi4B-k8s nopass
 #Certificate created at: /home/medved/easyrsa/pki/issued/Pi4B-k8s.crt
 #Inline file created: /home/medved/easyrsa/pki/inline/Pi4B-k8s.inline
+```
