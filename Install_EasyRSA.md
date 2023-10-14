@@ -23,17 +23,18 @@ mv ./$rsadir/* ./
 
 rm $rsatgz
 rm -rf $rsadir
-### cd ~/scripts
-### sudo chmod +x easyrsa.sh
-### ./easyrsa.sh
+
+#cd ~/scripts
+#sudo chmod +x easyrsa.sh
+#./easyrsa.sh
 ```
 ## Generate [rsa certs](https://community.openvpn.net/openvpn/wiki/EasyRSA3-OpenVPN-Howto)
 
 ```sh
 cd ~/easyrsa
 ./easyrsa init-pki
-# Your newly created PKI dir is: /home/medved/easyrsa/pki
-# Using Easy-RSA configuration: /home/medved/easyrsa/pki/vars
+#Your newly created PKI dir is: /home/medved/easyrsa/pki
+#Using Easy-RSA configuration: /home/medved/easyrsa/pki/vars
 ```
 ```sh
 tee -a <<EOF > /home/medved/easyrsa/pki/vars
@@ -58,28 +59,27 @@ EOF
 ## Creating a server certificate, key, and encryption files
 ```sh
 ./easyrsa build-ca nopass
-#CA creation complete. Your new CA certificate is at: /home/medved/easyrsa/pki/ca.crt
-
 ./easyrsa gen-dh nopass
-#DH parameters of size 2048 created at: /home/medved/easyrsa/pki/dh.pem
-
-./easyrsa build-server-full VDSina nopass
-#Certificate created at: /home/medved/easyrsa/pki/issued/VDSina.crt
-#Inline file created: /home/medved/easyrsa/pki/inline/VDSina.inline
-
 sudo openvpn --genkey --secret pki/ta.key
+#CA creation complete. Your new CA certificate is at: /home/medved/easyrsa/pki/ca.crt
+#DH parameters of size 2048 created at: /home/medved/easyrsa/pki/dh.pem
 #/home/medved/easyrsa/pki/ta.key
------
-./easyrsa build-client-full Pi4B nopass
-#Certificate created at: /home/medved/easyrsa/pki/issued/Pi4B.crt
-#Inline file created: /home/medved/easyrsa/pki/inline/Pi4B.inline
-
-#./easyrsa build-client-full X3Pro nopass
-#./easyrsa build-client-full 2Pro360 nopass
-#./easyrsa build-client-full T440 nopass
-#./easyrsa build-client-full Olly nopass
+```
+```sh
+./easyrsa build-server-full VDSina-vpn nopass
+#Certificate created at: /home/medved/easyrsa/pki/issued/VDSina-vpn.crt
+#Inline file created: /home/medved/easyrsa/pki/inline/VDSina-vpn.inline
 
 ./easyrsa --san=DNS:Pi4B,DNS:medvedcloud,DNS:medvedcloud.local,DNS:medvedcloud.lan,DNS:medvedcloud.duckdns.org build-server-full Pi4B-k8s nopass
 #Certificate created at: /home/medved/easyrsa/pki/issued/Pi4B-k8s.crt
 #Inline file created: /home/medved/easyrsa/pki/inline/Pi4B-k8s.inline
+
+./easyrsa build-client-full Pi4B-vpn nopass
+#Certificate created at: /home/medved/easyrsa/pki/issued/Pi4B-vpn.crt
+#Inline file created: /home/medved/easyrsa/pki/inline/Pi4B-vpn.inline
+
+#./easyrsa build-client-full X3Pro-vpn nopass
+#./easyrsa build-client-full 2Pro360-vpn nopass
+#./easyrsa build-client-full T440-vpn nopass
+#./easyrsa build-client-full Olly-vpn nopass
 ```
