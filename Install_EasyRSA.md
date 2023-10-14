@@ -41,10 +41,10 @@ set_var EASYRSA_DN              "org"
 
 set_var EASYRSA_REQ_COUNTRY     "VN"
 set_var EASYRSA_REQ_PROVINCE    "Danang"
-set_var EASYRSA_REQ_CITY        "Danang City"
-set_var EASYRSA_REQ_ORG         "Starfish Alley"
-set_var EASYRSA_REQ_EMAIL       "medvedcloud.duckdns.org"
-set_var EASYRSA_REQ_OU          "Medved Cloud"
+#set_var EASYRSA_REQ_CITY        "Danang City"
+set_var EASYRSA_REQ_ORG         "Starfish Alley CA"
+#set_var EASYRSA_REQ_EMAIL       "medvedcloud.duckdns.org"
+#set_var EASYRSA_REQ_OU          "Medved Cloud"
 
 set_var EASYRSA_NO_PASS         "1"
 set_var EASYRSA_KEY_SIZE        "2048"
@@ -52,6 +52,7 @@ set_var EASYRSA_ALGO            "rsa"
 set_var EASYRSA_CA_EXPIRE       "3650"
 set_var EASYRSA_CERT_EXPIRE     "3650"
 set_var EASYRSA_RAND_SN         "yes"
+set_var EASYRSA_BATCH           "1"
 EOF
 ```
 ## Creating a server certificate, key, and encryption files
