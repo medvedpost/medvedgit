@@ -3,6 +3,16 @@
 sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
 ```
 
+<details>
+<summary>Result</summary>
+	
+Result:
+```sh
+Some result
+```
+</details>
+
+
 ## [Generating public/private rsa key pair](https://andreyex.ru/linux/kak-dobavit-otkrytyj-klyuch-ssh-na-server/)
 ```sh
 mkdir /home/medved/.ssh/
@@ -23,6 +33,7 @@ sudo tee -a <<EOF >> /etc/ssh/sshd_config
 HostbasedAuthentication yes
 CASignatureAlgorithms +ssh-rsa
 EOF
+
 #sudo mkdir /root/.ssh
 #cp -r /home/medved/.ssh/. /root/.ssh/
 ```
