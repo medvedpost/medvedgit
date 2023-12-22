@@ -15,9 +15,9 @@ apt install openvpn -y
 sudo chmod 777 /etc/openvpn/
 #drwxr-xr-x  4 root root   4.0K Sep 14 17:41 openvpn
 
-sudo cp ~/easyrsa/pki/{ca.crt,ta.key,dh.pem___} /etc/openvpn
-sudo cp ~/easyrsa/pki/issued/VDSina.crt /etc/openvpn
-sudo cp ~/easyrsa/pki/private/{ca.key,VDSina.key} /etc/openvpn
+sudo cp ~/easyrsa/pki/{ca.crt,ta.key,dh.pem} /etc/openvpn
+sudo cp ~/easyrsa/pki/issued/VDSina-vpn.crt /etc/openvpn
+sudo cp ~/easyrsa/pki/private/{ca.key,VDSina-vpn.key} /etc/openvpn
 ```
 ## Configure OpenVPN (SERVER side)
 ```sh
@@ -26,8 +26,8 @@ port 1194
 proto udp
 dev tun
 ca ca.crt
-cert VDSina.crt
-key VDSina.key  # This file should be kept secret
+cert VDSina-vpn.crt
+key VDSina-vpn.key  # This file should be kept secret
 dh dh.pem
 server 10.3.3.0 255.255.255.0
 ifconfig-pool-persist /var/log/openvpn/ipp.txt
@@ -57,6 +57,7 @@ sudo chown -R nobody:nogroup /etc/openvpn/ccd
 ```
 ```sh
 #sudo openssl x509 -in /home/medved/staticclients/Pi4B.crt -noout -subject | sed 's/^.*\(CN.*,\).*$/\1/' | sed 's/.$//'
+mkdir ~/ccd
 tee -a <<EOF > ~/ccd/Pi4B
 ifconfig-push 10.3.3.4 255.255.255.0
 EOF
