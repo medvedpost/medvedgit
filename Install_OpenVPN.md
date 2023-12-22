@@ -73,6 +73,68 @@ sudo systemctl enable openvpn@server
 #sudo systemctl status openvpn@server
 ```
 
+## Create client config
+
+```bash
+mkdir ~/client
+cd ~/client
+```
+```bash
+tee -a <<EOF > base.conf
+client
+dev tun
+proto udp
+remote 195.2.75.173 1194
+resolv-retry infinite
+nobind
+user nobody
+group nogroup
+persist-key
+persist-tun
+remote-cert-tls server
+tls-auth ta.key 1
+cipher AES-128-CBC
+auth SHA256
+verb 3
+key-direction 1
+EOF
+```
+```bash
+sudo nano gen_conf.sh
+```
+```
+#!/bin/bash
+srv_cert=/etc/openvpn
+user_key=~/easyrsa/pki/private
+user_crt=~/easyrsa/pki/issued
+dir=~/client
+
+(cat ${dir}/base.conf
+
+echo '<ca>'
+sudo cat ${srv_cert}/ca.crt
+echo '</ca>'
+
+echo '<tls-auth>'
+sudo cat ${srv_cert}/ta.key
+echo '</tls-auth>'
+
+echo '<cert>'
+cat ${user_crt}/${1}.crt
+echo '</cert>'
+
+echo '<key>'
+cat ${user_key}/${1}.key
+echo '</key>'
+) > ${dir}/${1}.ovpn
+
+cp ${dir}/${1}.ovpn ${dir}/${1}.conf
+```
+```bash
+sudo chmod +x gen_conf.sh
+./gen_conf.sh Pi4B-vpn
+```
+
 ## Install and copy config to default OpenVPN folder (CLIENT side)
 ```sh
 sudo apt install openvpn -y
