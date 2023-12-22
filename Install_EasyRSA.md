@@ -1,5 +1,9 @@
 ## Install easyrsa
 
+```sh
+sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
+```
+
 Find out [actual release](https://github.com/OpenVPN/easy-rsa/releases) of easyrsa and change $rsalink 
 
 `rev` - revert string $rsalink
@@ -23,10 +27,6 @@ mv ./$rsadir/* ./
 
 rm $rsatgz
 rm -rf $rsadir
-
-#cd ~/scripts
-#sudo chmod +x easyrsa.sh
-#./easyrsa.sh
 ```
 ## Generate [rsa certs](https://community.openvpn.net/openvpn/wiki/EasyRSA3-OpenVPN-Howto)
 
@@ -36,7 +36,7 @@ cd ~/easyrsa
 #Your newly created PKI dir is: /home/medved/easyrsa/pki
 #Using Easy-RSA configuration: /home/medved/easyrsa/pki/vars
 ```
-```sh
+```bash
 tee -a <<EOF > /home/medved/easyrsa/pki/vars
 set_var EASYRSA_DN              "org"
 
@@ -60,6 +60,8 @@ EOF
 ```sh
 ./easyrsa build-ca nopass
 ./easyrsa gen-dh nopass
+
+apt install openvpn -y
 sudo openvpn --genkey --secret pki/ta.key
 #CA creation complete. Your new CA certificate is at: /home/medved/easyrsa/pki/ca.crt
 #DH parameters of size 2048 created at: /home/medved/easyrsa/pki/dh.pem
