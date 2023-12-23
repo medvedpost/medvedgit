@@ -145,7 +145,7 @@ sudo cp Pi4B-vpn.conf /etc/openvpn/
 ## Start OpenVPN service (CLIENT side)
 ```sh
 sudo systemctl start openvpn@Pi4B-vpn
-sudo systemctl enable openvpn@Pi4B
+sudo systemctl enable openvpn@Pi4B-vpn
 #sudo systemctl status openvpn@Pi4B-vpn
 #sudo systemctl daemon-reload
 sudo reboot
