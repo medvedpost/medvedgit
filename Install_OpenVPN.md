@@ -139,15 +139,15 @@ sudo chmod +x gen_conf.sh
 ```sh
 sudo apt install openvpn -y
 #sudo openvpn --config Pi4B.conf
-sudo cp Pi4B.conf /etc/openvpn/
+sudo cp Pi4B-vpn.conf /etc/openvpn/
 ```
 
 ## Start OpenVPN service (CLIENT side)
 ```sh
+sudo systemctl start openvpn@Pi4B-vpn
 sudo systemctl enable openvpn@Pi4B
-sudo systemctl daemon-reload
-sudo systemctl start openvpn@Pi4b
-#sudo systemctl status openvpn@Pi4b
+#sudo systemctl status openvpn@Pi4B-vpn
+#sudo systemctl daemon-reload
 sudo reboot
 ```
 [REFERENCES](https://wiki.dieg.info/openvpn#shag_10sozdanie_infrastruktury_dlja_konfiguracionnyx_fajlov_klientov)
