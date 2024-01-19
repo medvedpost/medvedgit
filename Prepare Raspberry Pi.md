@@ -127,6 +127,14 @@ crontab -e
 <pre>
 */1 * * * * /home/medved/reconnect-wifi.sh
 </pre>
+
+### Turn on cgroup
+```
+echo "cgroup_memory=1 cgroup_enable=memory" | sudo tee -a /boot/cmdline.txt
+```
+<pre>
+console=serial0,115200 console=tty1 root=PARTUUID=dc0f2163-02 rootfstype=ext4 fsck.repair=yes rootwait cfg80211.ieee80211_regdom=VNcgroup_memory=1 cgroup_enable=memory
+</pre>
 ```bash
 sudo reboot
 ```
