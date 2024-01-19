@@ -8,7 +8,7 @@ sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
 	
 Result:
 ```sh
-Some result
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
 ```
 </details>
 
